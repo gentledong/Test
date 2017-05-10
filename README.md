@@ -1,4 +1,5 @@
-# MyHeap< Elem , Storage<Elem> , Comp<ELem> >, ELem是元素类型，Storage是存储器，Comp是比较器
+# MyHeap< Elem , Storage<Elem> , Comp<ELem> >
+ELem是元素类型，Storage是存储器，Comp是比较器
 
 
 MyHeap和make_heap，push_heap，pop_heap都可以模仿priority的实现。
