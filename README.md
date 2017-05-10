@@ -1,6 +1,9 @@
 # MyHeap< Elem , Storage<Elem> , Comp<ELem> >
 ELem是元素类型，Storage是存储器，Comp是比较器
 
+Heap.h是MyHeap的定义。
+Heap.inl是MyHeap的实现。
+源3.cpp是测试程序。
 
 MyHeap和make_heap，push_heap，pop_heap都可以模仿priority的实现。
 
