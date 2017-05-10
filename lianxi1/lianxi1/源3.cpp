@@ -1,74 +1,54 @@
-#include<stdio.h>
-#include<vector>
-using std::vector;
-#include<queue>
-using std::priority_queue;
+#include"Heap.h"
+#include <iostream>
+using std::endl;
+using std::cout;
+#include<functional>
+using std::greater;
 
-struct node {
-	int index;
-	int value;
-	node(int index0 = 0, int value0 = 0) :index(index0), value(value0) {}
-	bool operator<(const struct node &x)const {
-		return value>x.value;
-	}
+template<typename ElemType>
+struct cmp {
+	bool operator()(const ElemType &x, const ElemType &y)const {
+		return x < y;
+	}//opearotr()
 };
-int dijkstra(const int &start, const int &end, const vector<vector<int> > &edges, const int &N) {
-	vector<int> discs(N, -1);
-	vector<bool> marks(N, false);
-	int newp(start);
-	marks[newp] = true;
-	discs[newp] = 0;
-	priority_queue<node> priQue;
-	for (int loop = 1; loop <= N - 1; loop++) {
-		for (int j = 0; j<(int)edges[newp].size(); j++) {
-			int next = edges[newp][j];
-			if (marks[next] == true)continue;
-			int cost(1);
-			if (discs[next] == -1 || cost + discs[newp]<discs[next]) {
-				discs[next] = cost + discs[newp];
-				priQue.push(node(next, discs[next]));
-			}
-		}
-		/*
-		int minm(-1);
-		for(int i = 0;i<N;i++){
-		if(marks[i]==true)continue;
-		if(discs[i]==-1)continue;
-		if(minm==-1||discs[i]<minm){
-		minm=discs[i];
-		newp=i;
-		}
-		}
-		*/
-		node cur = priQue.top();
-		priQue.pop();
-		newp = cur.index;
-		marks[newp] = true;
-		if (newp == end)break;
-	}
-	for (int i = 0; i<N; i++) {
-		printf("%d ", discs[i]);
-	}
-	putchar('\n');
-	return discs[end];
-}
 
 int main() {
-	int N(-1);
-	scanf("%d", &N);
-	vector<vector<int> > edges(N);
-	for (int i = 0; i<N; i++) {
-		int K(-1);
-		scanf("%d:", &K);
-		for (int j = 0; j<K; j++) {
-			int temp(-1);
-			scanf("%d", &temp);
-			edges[i].push_back(temp);
-		}
-	}
-	int start(-1), end(-1);
-	scanf("%d%d", &start, &end);
-	int res = dijkstra(start, end, edges, N);
-	res == -1 ? puts("No") : printf("YES %d\n", res);
+	vector<int> data{ 0,1,2,3,4,8,9,3,5 };
+	MyHeap<int> intHeapObj(data);
+	//MyHeap<int,vector<int>,less<int> > intHeapObj(data);
+	//MyHeap<int, vector<int>, greater<int> > intHeapObj(data);
+	//MyHeap<int, vector<int> ,cmp<int> > intHeapObj(data);
+	intHeapObj.printHeap();
+
+	intHeapObj.makeHeap();
+	intHeapObj.printHeap();
+
+	intHeapObj.pushHeap(7);
+	intHeapObj.printHeap();
+
+	intHeapObj.popHeap();
+	intHeapObj.printHeap();
+
+	vector<int> nums = intHeapObj.sortHeap();
+	int sizeOfNums = (int)nums.size();
+	cout << "Sorted data :";
+	for (int i(0); i < sizeOfNums - 1; ++i)cout << nums[i] << " ";
+	if (sizeOfNums > 0)cout << nums[sizeOfNums - 1] << endl;
 	return 0;
-}
+}//main
+ /*less，自定义cmp<int>
+ Heap : 9 5 8 3 4 0 2 1 3
+ Heap : 9 5 8 3 4 0 2 1 3
+ Heap : 9 7 8 3 5 0 2 1 3 4
+ Heap : 8 7 4 3 5 0 2 1 3
+ Sorted data :0 1 2 3 3 4 5 7 8
+ Press any key to continue . . .
+ */
+ /*greater
+ Heap: 0 1 2 3 4 8 9 3 5
+ Heap : 0 1 2 3 4 8 9 3 5
+ Heap : 0 1 2 3 4 8 9 3 5 7
+ Heap : 1 3 2 3 4 8 9 7 5
+ Sorted data : 9 8 7 5 4 3 3 2 1
+ Press any key to continue . . .
+ */
